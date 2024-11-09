@@ -1,0 +1,51 @@
+#dashboard-page{
+  padding-top: 90px;
+  background-color: #fff;
+}
+.dashboard-wrapper{
+  position: fixed;
+  top: 15%;
+  bottom: 0%;
+  min-height: 70%;
+  width: 220px;
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  justify-content: space-between;
+}
+.dashboard-links{
+  width: 100%;
+}
+.dashboard-links button{
+ width: 100%;
+ display: flex;
+ align-items: center;
+ justify-content: start;
+ border: 1px solid #808080cd;
+ padding: 12px 20px;
+ border-radius: 4px;
+ margin-top: 10px;
+}
+.dashboard-links button:hover{
+  background-color: #0897d4;
+  color: #fff;
+}
+.dashboard-links-icon{
+  margin-right: 10px;
+}
+.dashboard-logout{
+  margin-bottom: 15px;
+  width: 100%;
+}
+.dashboard-views{
+  width: 100%;
+}
+.dashboard-logout button{
+  display: flex;
+  align-items: center;
+  justify-content: start;
+  padding: 10px 20px;
+  width: 100%;
+  border-radius: 4px;
+  border: 1px solid #808080cd;
+}
