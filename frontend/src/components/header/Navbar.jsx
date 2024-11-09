@@ -1,18 +1,22 @@
 import React, { useState } from "react";
+import { useNavigate} from "react-router-dom";
 import { GoHome } from "react-icons/go";
 import { TiMessages } from "react-icons/ti";
 import usericon from "../../assets/images/person.jpeg";
 import logo from "../../assets/icons/tracking.png";
 import { IoNotificationsOutline } from "react-icons/io5";
 import { AiOutlineSchedule } from "react-icons/ai";
-import { Avatar, Badge, Space } from "antd";
+import {Badge} from "antd";
 import "./Navbar.css";
 
 function Navbar() {
+  
   const [activeLink, setActiveLink] = useState("Overview");
+  const navigate = useNavigate();
 
-  const handleLinkClick = (link) => {
+  const handleLinkClick = (link, path) => {
     setActiveLink(link);
+    navigate(path);
   };
 
   return (
@@ -26,7 +30,7 @@ function Navbar() {
           className={`navbar-links ${
             activeLink === "Overview" ? "active" : ""
           }`}
-          onClick={() => handleLinkClick("Overview")}
+          onClick={() => handleLinkClick("Overview", "/dashboard/overview")}
         >
           <GoHome className="navbar-links-icon" />
           <a href="#">Overview</a>
@@ -35,7 +39,7 @@ function Navbar() {
           className={`navbar-links ${
             activeLink === "Messages" ? "active" : ""
           }`}
-          onClick={() => handleLinkClick("Messages")}
+          onClick={() => handleLinkClick("Messages", "/dashboard/messages")}
         >
           <Badge count={99}>
             <TiMessages className="navbar-links-icon" />
@@ -47,7 +51,7 @@ function Navbar() {
           className={`navbar-links ${
             activeLink === "Schedule" ? "active" : ""
           }`}
-          onClick={() => handleLinkClick("Schedule")}
+                onClick={() => handleLinkClick("Schedule", "/dashboard/schedule")}
         >
           <AiOutlineSchedule className="navbar-links-icon" />
           <a href="#">Schedule</a>
@@ -56,7 +60,7 @@ function Navbar() {
           className={`navbar-links ${
             activeLink === "Notifications" ? "active" : ""
           }`}
-          onClick={() => handleLinkClick("Notifications")}
+          onClick={() => handleLinkClick("Notifications", "/dashboard/notifications")}
         >
           <Badge count={99}>
             <IoNotificationsOutline className="navbar-links-icon" />

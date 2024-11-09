@@ -1,9 +1,9 @@
-import React from "react";
+import React from 'react'
 
-function Vehicles() {
+function Analytics() {
   return (
     <div>
-      <h4>The Vehicles List</h4>
+       <h4>The Analytics</h4>
       <p>
         Lorem ipsum dolor sit amet, consectetur adipisicing elit. Commodi
         corporis beatae exercitationem corrupti sed mollitia. Perspiciatis rerum
@@ -17,7 +17,7 @@ function Vehicles() {
         accusamus, eius non deserunt?
       </p>
     </div>
-  );
+  )
 }
 
-export default Vehicles;
+export default Analytics

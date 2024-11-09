@@ -3,11 +3,19 @@ import React from "react";
 function Messages() {
   return (
     <div>
-      <h1>
-        Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ullam eius
-        pariatur similique cumque quo at eos voluptas vero in esse accusantium
-        ea obcaecati velit, aliquam sunt beatae optio! Ea, voluptate?
-      </h1>
+    <h4>The messages</h4>
+      <p>
+        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Commodi
+        corporis beatae exercitationem corrupti sed mollitia. Perspiciatis rerum
+        esse quidem, perferendis laboriosam sint ipsa veniam sapiente adipisci
+        accusamus, eius non deserunt?
+      </p>
+      <p>
+        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Commodi
+        corporis beatae exercitationem corrupti sed mollitia. Perspiciatis rerum
+        esse quidem, perferendis laboriosam sint ipsa veniam sapiente adipisci
+        accusamus, eius non deserunt?
+      </p>
     </div>
   );
 }
