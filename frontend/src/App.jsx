@@ -18,17 +18,21 @@ import Settings from "./pages/dashboard/settings/Settings";
 import Trips from "./pages/dashboard/trips/Trips";
 import Vehicles from "./pages/dashboard/vehicles/Vehicles";
 import Login from "./pages/auth/login/Login";
+import Signup from "./pages/auth/signup/Signup";
+import Profile from "./pages/dashboard/profile/Profile";
 
 function App() {
   const router = createBrowserRouter(
     createRoutesFromElements(
       <Route path="/" element={<RootLayOut />}>
         <Route index element={<Login />} />
+        <Route path="signup" element={<Signup/>} />
         <Route path="/dashboard" element={<Dashboard />}>
           <Route index element={<Overview />} />
           <Route path="overview" element={<Overview />} />
           <Route path="messages" element={<Messages />} />
           <Route path="analytics" element={<Analytics />} />
+          <Route path="profile" element={<Profile/>} />
           <Route path="notifications" element={<Notifications />} />
           <Route path="reports" element={<Reports />} />
           <Route path="schedule" element={<Schedule />} />

@@ -3,7 +3,7 @@ import Banner from "../../../assets/images/banner.jpg";
 import Logo from "../../../assets/icons/tracking.png";
 import { useNavigate } from "react-router-dom";
 import "./Login.css";
-import { Button, Input,Checkbox } from "antd";
+import { Input, Checkbox } from "antd";
 
 function Login() {
   const navigate = useNavigate();
@@ -38,7 +38,12 @@ function Login() {
                 <button size="large" onClick={() => navigate("/dashboard")}>
                   Login
                 </button>
-                <p>Dont have account ? Register</p>
+                <p>
+                  Dont have account ?{" "}
+                  <a href="#" onClick={() => navigate("signup")}>
+                    Register
+                  </a>
+                </p>
               </div>
             </form>
           </div>
