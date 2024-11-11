@@ -1,54 +1,82 @@
 import React from "react";
-import { useNavigate} from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import "./Dashboard.css";
 import { RiLogoutBoxLine } from "react-icons/ri";
 import { TbReportSearch } from "react-icons/tb";
 import { RxDashboard } from "react-icons/rx";
-import { IoAnalyticsOutline } from "react-icons/io5";
-import { IoSettingsOutline } from "react-icons/io5";
+import { IoAnalyticsOutline, IoSettingsOutline } from "react-icons/io5";
 import { RiRoadMapLine } from "react-icons/ri";
 import { BsTruck } from "react-icons/bs";
 import { Outlet } from "react-router-dom";
+import { useResetRecoilState } from "recoil";
+import { message } from "antd";
+import userAtom from "../../atoms/userAtom";
 import Navbar from "../../components/header/Navbar";
 
 function Dashboard() {
   const navigate = useNavigate();
+  const resetUser = useResetRecoilState(userAtom);
+
+  const handleLogout = async () => {
+    try {
+      const response = await fetch("/api/users/logout", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || "Logout failed");
+      }
+
+      // Clear user data from Recoil state and localStorage
+      resetUser();
+      localStorage.removeItem("user-data");
+
+      message.success("Logout successful!");
+      navigate("/");
+    } catch (error) {
+      message.error(error.message || "Something went wrong during logout");
+    }
+  };
+
   return (
     <div className="container-fluid" id="dashboard-page">
-        <Navbar/>
-      <div class="row">
-        <div class="col-lg-2 col-md-4">
-          <div class="dashboard-wrapper">
-            <div class="dashboard-links">
-              <button     onClick={() => navigate("/dashboard/overview")}>
-                <RxDashboard class="dashboard-links-icon" /> Dashboard
+      <Navbar />
+      <div className="row">
+        <div className="col-lg-2 col-md-4">
+          <div className="dashboard-wrapper">
+            <div className="dashboard-links">
+              <button onClick={() => navigate("/dashboard/overview")}>
+                <RxDashboard className="dashboard-links-icon" /> Dashboard
               </button>
               <button onClick={() => navigate("/dashboard/vehicles")}>
-                {" "}
-                <BsTruck class="dashboard-links-icon" /> Vehicles
+                <BsTruck className="dashboard-links-icon" /> Vehicles
               </button>
               <button onClick={() => navigate("/dashboard/reports")}>
-                <TbReportSearch class="dashboard-links-icon" /> Reports
+                <TbReportSearch className="dashboard-links-icon" /> Reports
               </button>
               <button onClick={() => navigate("/dashboard/analytics")}>
-                <IoAnalyticsOutline class="dashboard-links-icon" /> Analytics
+                <IoAnalyticsOutline className="dashboard-links-icon" /> Analytics
               </button>
               <button onClick={() => navigate("/dashboard/trips")}>
-                <RiRoadMapLine class="dashboard-links-icon" /> Trips
+                <RiRoadMapLine className="dashboard-links-icon" /> Trips
               </button>
               <button onClick={() => navigate("/dashboard/settings")}>
-                <IoSettingsOutline class="dashboard-links-icon" /> Settings
+                <IoSettingsOutline className="dashboard-links-icon" /> Settings
               </button>
             </div>
-            <div class="dashboard-logout">
-              <button onClick={() => navigate("/")}>
-                <RiLogoutBoxLine class="dashboard-links-icon" /> logout
+            <div className="dashboard-logout">
+              <button onClick={handleLogout}>
+                <RiLogoutBoxLine className="dashboard-links-icon" /> Logout
               </button>
             </div>
           </div>
         </div>
-        <div class="col-lg-10 col-md-4">
-          <div class="dashboard-views">
+        <div className="col-lg-10 col-md-4">
+          <div className="dashboard-views">
             <Outlet />
           </div>
         </div>
