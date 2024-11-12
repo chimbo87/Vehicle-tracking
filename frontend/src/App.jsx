@@ -20,6 +20,7 @@ import Vehicles from "./pages/dashboard/vehicles/Vehicles";
 import Login from "./pages/auth/login/Login";
 import Signup from "./pages/auth/signup/Signup";
 import Profile from "./pages/dashboard/profile/Profile";
+import VehicleDetails from "./pages/dashboard/vehicles/VehicleDetails";
 
 function App() {
   const router = createBrowserRouter(
@@ -31,6 +32,7 @@ function App() {
           <Route index element={<Overview />} />
           <Route path="overview" element={<Overview />} />
           <Route path="messages" element={<Messages />} />
+          <Route path="vehicle-details" element={<VehicleDetails/>} />
           <Route path="analytics" element={<Analytics />} />
           <Route path="profile" element={<Profile/>} />
           <Route path="notifications" element={<Notifications />} />

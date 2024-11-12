@@ -1,24 +1,38 @@
-.vehicle-popup h5 {
-    margin-bottom: 10px;
-    color: #333;
-  }
-  
-  .vehicle-popup p {
-    margin: 5px 0;
-  }
-  
-  .overview-stat-card {
-    padding: 15px;
-    background: #f8f9fa;
-    border-radius: 8px;
-    margin-bottom: 15px;
-  }
-  
-  .update-item {
-    padding: 10px 0;
-    border-bottom: 1px solid #eee;
-  }
-  
-  .update-item:last-child {
-    border-bottom: none;
-  }
+.overview-page{
+  padding: 20px 10px;
+}
+
+.overview-table{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 10px;
+}
+/* .overview-map-box{} */
+#LineChart{
+  width: 100%;
+  border: 1px solid #bababa;
+  background-color: #bababa38;
+  /* box-shadow: 2px 1px 10px #b1b0b0; */
+  padding: 2px;
+  border-radius: 2px;
+  margin-bottom: 10px;
+}
+#LineChart h5{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+#latest-up{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #bababa3a;
+  padding: 4px 30px;
+  margin: 10px 0px;
+}
+#latest-up button{
+  border: none;
+  background-color: transparent;
+  text-decoration: underline;
+}
