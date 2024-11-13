@@ -50,7 +50,7 @@ function Dashboard() {
           <div className="dashboard-wrapper">
             <div className="dashboard-links">
               <button onClick={() => navigate("/dashboard/overview")}>
-                <RxDashboard className="dashboard-links-icon" /> Dashboard
+                <RxDashboard className="dashboard-links-icon" /> Admnistration
               </button>
               <button onClick={() => navigate("/dashboard/vehicles")}>
                 <BsTruck className="dashboard-links-icon" /> Vehicles

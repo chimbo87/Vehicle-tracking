@@ -1,0 +1,16 @@
+#notification-page{
+    width: 100%;
+    height: 80vh;
+    background-color: #dcdcdc44;
+    border: 1px solid #dcdcdc;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-top: 20px;
+}
+#notification-page h4{
+    font-weight: 700;
+    color: #bd4012;
+}

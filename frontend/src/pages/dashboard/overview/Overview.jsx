@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
+import { MapContainer, TileLayer, Marker, Popup, useMap } from "react-leaflet";
 import { Table, Button } from "antd";
 import { useNavigate } from "react-router-dom";
 import {
@@ -22,6 +22,16 @@ import bus from "../../../assets/icons/bus.png";
 import motorcycle from "../../../assets/icons/bike.png";
 import "./Overview.css";
 
+const ZoomToVehicle = ({ position }) => {
+  const map = useMap();
+  useEffect(() => {
+    if (position) {
+      map.flyTo(position, 8); 
+    }
+  }, [position, map]);
+  return null;
+};
+
 const vehicleIcons = {
   car: new L.Icon({ iconUrl: car, iconSize: [30, 30] }),
   truck: new L.Icon({ iconUrl: truck, iconSize: [30, 30] }),
@@ -29,7 +39,6 @@ const vehicleIcons = {
   motorcycle: new L.Icon({ iconUrl: motorcycle, iconSize: [30, 30] }),
 };
 
-// South Africa boundary coordinates
 const southAfricaBounds = {
   latMin: -35,
   latMax: -22,
@@ -39,51 +48,81 @@ const southAfricaBounds = {
 
 function Overview() {
   const navigate = useNavigate();
+  const [selectedVehiclePosition, setSelectedVehiclePosition] = useState(null);
   const [vehicles, setVehicles] = useState([]);
   const [lineChartData, setLineChartData] = useState([]);
   const [pieChartData, setPieChartData] = useState([]);
 
   useEffect(() => {
-    // Fetch data from the API
-    fetch("/api/schedules/get")
-      .then((response) => response.json())
-      .then((data) => {
-        // Filter vehicles within South Africa's boundaries
-        const filteredData = data.filter((vehicle) => {
-          const [lng, lat] = vehicle.location.coordinates;
-          return (
-            lat >= southAfricaBounds.latMin &&
-            lat <= southAfricaBounds.latMax &&
-            lng >= southAfricaBounds.lngMin &&
-            lng <= southAfricaBounds.lngMax
+    const fetchData = () => {
+      fetch("/api/schedules/get")
+        .then((response) => response.json())
+        .then((data) => {
+          const filteredData = data.filter((vehicle) => {
+            const [lng, lat] = vehicle.location.coordinates;
+            return (
+              lat >= southAfricaBounds.latMin &&
+              lat <= southAfricaBounds.latMax &&
+              lng >= southAfricaBounds.lngMin &&
+              lng <= southAfricaBounds.lngMax
+            );
+          });
+          setVehicles(filteredData);
+
+          // Prepare the data for the line chart
+          const vehicleStatusData = filteredData.reduce((acc, vehicle) => {
+            const month = new Date(vehicle.updatedAt).toLocaleString("default", {
+              month: "short",
+            });
+            if (!acc[month]) {
+              acc[month] = { moving: 0, idle: 0, parked: 0 };
+            }
+            acc[month][vehicle.vehicleStatus.toLowerCase()]++;
+            return acc;
+          }, {});
+
+          setLineChartData(
+            Object.keys(vehicleStatusData).map((month) => ({
+              month,
+              moving: vehicleStatusData[month].moving,
+              idle: vehicleStatusData[month].idle,
+              parked: vehicleStatusData[month].parked,
+            }))
           );
-        });
-        setVehicles(filteredData);
 
-        // Prepare data for line chart
-        const lineChartData = filteredData.map((vehicle) => ({
-          name: vehicle.registrationNumber,
-          count: 1,
-        }));
-        setLineChartData(lineChartData);
+          // Prepare the data for the pie chart
+          const vehicleTypes = {};
+          filteredData.forEach((vehicle) => {
+            if (vehicleTypes[vehicle.vehicleType]) {
+              vehicleTypes[vehicle.vehicleType]++;
+            } else {
+              vehicleTypes[vehicle.vehicleType] = 1;
+            }
+          });
+          const pieChartData = Object.keys(vehicleTypes).map((type) => ({
+            name: type,
+            value: vehicleTypes[type],
+          }));
+          setPieChartData(pieChartData);
+        })
+        .catch((error) => console.error("Error fetching data:", error));
+    };
 
-        // Prepare data for pie chart
-        const vehicleTypes = {};
-        filteredData.forEach((vehicle) => {
-          if (vehicleTypes[vehicle.vehicleType]) {
-            vehicleTypes[vehicle.vehicleType]++;
-          } else {
-            vehicleTypes[vehicle.vehicleType] = 1;
-          }
-        });
-        const pieChartData = Object.keys(vehicleTypes).map((type) => ({
-          name: type,
-          value: vehicleTypes[type],
-        }));
-        setPieChartData(pieChartData);
-      })
-      .catch((error) => console.error("Error fetching data:", error));
+    fetchData();
+
+    // Set interval to refresh the data every 30 seconds
+    const intervalId = setInterval(() => {
+      fetchData();
+    }, 30000); // 30 seconds
+
+    // Clear the interval on component unmount
+    return () => clearInterval(intervalId);
   }, []);
+
+  // Function to handle navigation to vehicle details
+  const handleViewDetails = (vehicleId) => {
+    navigate(`/dashboard/vehicle-details/${vehicleId}`);
+  };
 
   const columns = [
     { title: "Brand", dataIndex: "vehicleBrand", key: "vehicleBrand" },
@@ -95,7 +134,7 @@ function Overview() {
     { title: "Type", dataIndex: "vehicleType", key: "vehicleType" },
     { title: "Status", dataIndex: "vehicleStatus", key: "vehicleStatus" },
     {
-      title: "Position",
+      title: "Location",
       key: "position",
       render: (_, record) =>
         `${record.location.coordinates[1]}, ${record.location.coordinates[0]}`,
@@ -103,8 +142,8 @@ function Overview() {
     {
       title: "Action",
       key: "action",
-      render: () => (
-        <Button type="primary" onClick={() => navigate("/dashboard/vehicle-details")}>
+      render: (_, record) => (
+        <Button type="primary" onClick={() => handleViewDetails(record._id)}>
           Details
         </Button>
       ),
@@ -117,14 +156,15 @@ function Overview() {
         <div className="col-lg-8 col-md-4">
           <div className="overview-map-box">
             <MapContainer
-              center={[-26.2041, 28.0473]}
-              zoom={10}
+              center={[-30.5595, 22.9375]}
+              zoom={5}
               style={{ height: "450px", width: "100%" }}
             >
               <TileLayer
                 url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-                attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                attribution="&copy; OpenStreetMap contributors"
               />
+
               {vehicles.map((vehicle) => (
                 <Marker
                   key={vehicle._id}
@@ -133,6 +173,13 @@ function Overview() {
                     vehicle.location.coordinates[0],
                   ]}
                   icon={vehicleIcons[vehicle.vehicleType] || vehicleIcons.car}
+                  eventHandlers={{
+                    click: () =>
+                      setSelectedVehiclePosition([
+                        vehicle.location.coordinates[1],
+                        vehicle.location.coordinates[0],
+                      ]),
+                  }}
                 >
                   <Popup>
                     <strong>
@@ -144,9 +191,19 @@ function Overview() {
                     Status: {vehicle.vehicleStatus}
                     <br />
                     {vehicle.address}, {vehicle.town}, {vehicle.country}
+                    <br />
+                    <Button
+                      type="link"
+                      onClick={() => handleViewDetails(vehicle._id)}
+                    >
+                      View Details
+                    </Button>
                   </Popup>
                 </Marker>
               ))}
+              {selectedVehiclePosition && (
+                <ZoomToVehicle position={selectedVehiclePosition} />
+              )}
             </MapContainer>
           </div>
         </div>
@@ -154,13 +211,15 @@ function Overview() {
           <div>
             <div id="LineChart">
               <h5>Vehicle Status</h5>
-              <LineChart width={100} height={200} data={lineChartData}>
-                <XAxis dataKey="name" />
+              <LineChart width={300} height={200} data={lineChartData}>
+                <XAxis dataKey="month" />
                 <YAxis />
                 <CartesianGrid strokeDasharray="3 3" />
                 <Tooltip />
                 <Legend />
-                <Line type="monotone" dataKey="count" stroke="#8884d8" />
+                <Line type="monotone" dataKey="moving" stroke="#8884d8" />
+                <Line type="monotone" dataKey="idle" stroke="#82ca9d" />
+                <Line type="monotone" dataKey="parked" stroke="#ffc658" />
               </LineChart>
             </div>
             <div id="LineChart">
@@ -193,7 +252,9 @@ function Overview() {
       <div className="row">
         <div id="latest-up">
           <h5>Latest Update</h5>
-          <button type="link" onClick={() => navigate("/dashboard/vehicles")}>View All</button>
+          <button type="link" onClick={() => navigate("/dashboard/vehicles")}>
+            View All
+          </button>
         </div>
         <div className="col-lg-12 col-md-4">
           <Table

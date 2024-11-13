@@ -1,15 +1,26 @@
 import React, { useState, useEffect } from "react";
-import { Table, Tag, Button, Input, Space, Divider } from "antd";
+import { Table, Tag, Button, Input, Space } from "antd";
+import { useNavigate } from "react-router-dom";
+import { SearchOutlined } from "@ant-design/icons";
 import car from "../../../assets/icons/car.png";
 import truck from "../../../assets/icons/truck.png";
 import bus from "../../../assets/icons/bus.png";
 import motorcycle from "../../../assets/icons/bike.png";
-import { SearchOutlined } from "@ant-design/icons";
-import './Vehicles.css';
+import "./Vehicles.css";
 
-function Vehicles() {
+const Vehicles = () => {
+  const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState([]);
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+
+  useEffect(() => {
+    const handleResize = () => setWindowWidth(window.innerWidth);
+    window.addEventListener("resize", handleResize);
+    fetchVehicles();
+
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   const fetchVehicles = async () => {
     try {
@@ -27,7 +38,7 @@ function Vehicles() {
         status: item.vehicleStatus,
         position: `${item.address}, ${item.town}`,
         address: item.address,
-        town: item.town
+        town: item.town,
       }));
       setData(mappedData.reverse());
     } catch (error) {
@@ -36,11 +47,9 @@ function Vehicles() {
       setLoading(false);
     }
   };
-
-  useEffect(() => {
-    fetchVehicles();
-  }, []);
-
+  const handleViewDetails = (vehicleId) => {
+    navigate(`/dashboard/vehicle-details/${vehicleId}`);
+  };
   const getVehicleIcon = (type) => {
     switch (type.toLowerCase()) {
       case "car":
@@ -163,25 +172,80 @@ function Vehicles() {
       ),
     },
     {
-      title: "Position",
+      title: "Location",
       dataIndex: "position",
       key: "position",
       ...getColumnSearchProps("position"),
       render: (_, record) => (
-        <div style={{ display: 'flex', flexDirection: 'column' }}>
+        <div style={{ display: "flex", flexDirection: "column" }}>
           <span>{record.address}</span>
-          <span style={{ color: '#666' }}>{record.town}</span>
+          <span style={{ color: "#666" }}>{record.town}</span>
         </div>
       ),
     },
     {
       title: "Action",
       key: "action",
-      render: (_, record) => <Button type="primary">Details</Button>,
+      render: (_, record) => (
+        <Button type="primary">
+          Details
+        </Button>
+      ),
     },
   ];
 
-  return (
+  const getStatusStyle = (status) => {
+    const baseStyle = {
+      padding: "6px 16px",
+      borderRadius: "20px",
+      border: "none",
+      color: "white",
+      fontWeight: "500",
+      textTransform: "capitalize",
+    };
+
+    switch (status.toLowerCase()) {
+      case "moving":
+        return { ...baseStyle, backgroundColor: "#52c41a" }; 
+      case "parked":
+        return { ...baseStyle, backgroundColor: "#faad14" }; 
+      case "idle":
+        return { ...baseStyle, backgroundColor: "#1890ff" }; 
+      default:
+        return { ...baseStyle, backgroundColor: "#d9d9d9" }; // grey
+    }
+  };
+
+  const renderMobileView = () => (
+    <div className="row">
+      {data.map((vehicle) => (
+        <div key={vehicle.key} className="col-lg-6 col-md-4">
+          <div className="vehicle-mobile-card">
+            <div className="vehicle-mobile-cardimg">
+              <img src={getVehicleIcon(vehicle.type)} alt={vehicle.type} />
+            </div>
+            <p>{vehicle.vehicleBrand}</p>
+            <p>{vehicle.regNumber}</p>
+            <button
+              className="status-btn"
+              style={getStatusStyle(vehicle.status)}
+            >
+              {vehicle.status}
+            </button>
+            <p>
+              {vehicle.address}, {vehicle.town}
+            </p>
+            <p>2 mins ago</p>
+            <Button onClick={() => handleViewDetails(vehicle.key)}>View More</Button>
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+  
+
+
+  const renderDesktopView = () => (
     <div style={{ padding: "24px" }}>
       <div className="vehicle-list-box">
         <h5>Vehicle List</h5>
@@ -192,9 +256,16 @@ function Vehicles() {
         pagination={{ pageSize: 10 }}
         bordered
         loading={loading}
+        onRow={(record) => ({
+          onClick: () => handleViewDetails(record.key),
+        })}
       />
     </div>
   );
-}
+
+  return (
+    <div>{windowWidth <= 768 ? renderMobileView() : renderDesktopView()}</div>
+  );
+};
 
 export default Vehicles;

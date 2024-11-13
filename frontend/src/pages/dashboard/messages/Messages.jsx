@@ -1,9 +1,10 @@
 import React from "react";
+import './Messages.css'
 
 function Messages() {
   return (
-    <div>
-    <h4>The messages</h4>
+    <div id="message-page">
+    <h4>The messages Page</h4>
       <p>
         Lorem ipsum dolor sit amet, consectetur adipisicing elit. Commodi
         corporis beatae exercitationem corrupti sed mollitia. Perspiciatis rerum

@@ -1,8 +1,10 @@
 import React from "react";
+import './Profile.css'
 
 function Profile() {
   return (
-    <div>
+    <div id="profile-page">
+      <h4>Profile Page</h4>
       <p>
         Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequatur
         consequuntur delectus sed quod laborum aliquam, iste iusto autem ratione

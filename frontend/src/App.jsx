@@ -32,7 +32,7 @@ function App() {
           <Route index element={<Overview />} />
           <Route path="overview" element={<Overview />} />
           <Route path="messages" element={<Messages />} />
-          <Route path="vehicle-details" element={<VehicleDetails/>} />
+          <Route path="vehicle-details/:id" element={<VehicleDetails/>}/>
           <Route path="analytics" element={<Analytics />} />
           <Route path="profile" element={<Profile/>} />
           <Route path="notifications" element={<Notifications />} />

@@ -406,12 +406,12 @@ function Schedule() {
   const prev = () => setCurrent(current - 1);
 
   return (
-    <div className="schedule-container">
-      <Steps current={current}>
+    <div id="schedule-container">
+      {/* <Steps current={current}>
         {steps.map((item) => (
           <Steps.Step key={item.title} title={item.title} />
         ))}
-      </Steps>
+      </Steps> */}
       <div className="steps-content">
         <Form form={form} layout="vertical">
           {steps[current].content(formData, handleInputChange, handlePhoneChange, form)}
@@ -419,12 +419,12 @@ function Schedule() {
       </div>
       <div className="steps-action">
         {current < steps.length - 1 && (
-          <Button type="primary" onClick={next} style={{ marginRight: 8 }}>
+          <Button type="primary" onClick={next} style={{ marginRight: 8 }}  size="large">
             Next
           </Button>
         )}
         {current === steps.length - 1 && (
-          <Button
+          <Button size="large"
             type="primary"
             onClick={handleSubmit}
             loading={isSubmitting}
@@ -433,7 +433,7 @@ function Schedule() {
           </Button>
         )}
         {current > 0 && (
-          <Button style={{ margin: "0 8px" }} onClick={prev}>
+          <Button style={{ margin: "0 8px" }} onClick={prev}  size="large">
             Previous
           </Button>
         )}

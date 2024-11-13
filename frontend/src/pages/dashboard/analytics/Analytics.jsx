@@ -1,11 +1,15 @@
 import React from 'react'
+import './Analytics.css'
 
 function Analytics() {
   return (
-    <div>
-       <h4>The Analytics</h4>
+    <div id='analytics-page'>
+       <h4>The Analytics Page</h4>
       <p>
         Lorem ipsum dolor sit amet, consectetur adipisicing elit. Commodi
+        corporis beatae exercitationem corrupti sed mollitia. Perspiciatis rerum
+        esse quidem, perferendis laboriosam sint ipsa veniam sapiente adipisci
+        accusamus, eius non deserunt?consectetur adipisicing elit. Commodi
         corporis beatae exercitationem corrupti sed mollitia. Perspiciatis rerum
         esse quidem, perferendis laboriosam sint ipsa veniam sapiente adipisci
         accusamus, eius non deserunt?
@@ -14,7 +18,7 @@ function Analytics() {
         Lorem ipsum dolor sit amet, consectetur adipisicing elit. Commodi
         corporis beatae exercitationem corrupti sed mollitia. Perspiciatis rerum
         esse quidem, perferendis laboriosam sint ipsa veniam sapiente adipisci
-        accusamus, eius non deserunt?
+        accusamus, eius non deserunt?consectetur adipisicing elit. 
       </p>
     </div>
   )

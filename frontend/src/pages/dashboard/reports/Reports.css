@@ -1,0 +1,23 @@
+.reports-card{
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    box-shadow: 2px 1px 10px #b1b0b0;
+    padding: 10px;
+    margin: 10px 0px;
+    border-radius: 4px;
+}
+.reports-card h5{
+    font-weight: 700;
+}
+.reports-card-img{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.reports-card-img img{
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    margin-right: 5px;
+}

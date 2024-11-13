@@ -12,7 +12,7 @@ import { FaUser } from "react-icons/fa";
 import logo from "../../assets/icons/tracking.png";
 import { RiMenu3Fill } from "react-icons/ri";
 import { AiOutlineSchedule } from "react-icons/ai";
-import { useRecoilValue, useSetRecoilState, useRecoilState } from "recoil";
+import { useRecoilState } from "recoil";
 import userAtom from "../../atoms/userAtom";
 import { Button, Drawer, Badge } from "antd";
 import "./Navbar.css";
@@ -133,28 +133,28 @@ function Navbar() {
       </div>
 
       <Drawer
-        closable
-        destroyOnClose
-        title={<p>{profile?.name || "User Name"}</p>}
-        placement="right"
-        open={open}
-        loading={loading}
-        onClose={() => setOpen(false)}
-      >
-        <div className="drawer-wrap">
-          <div className="drawer-wrap-top">
-            <button><FaUser className="drawer-wrap-icon" /> Profile</button>
-            <button><LuTruck className="drawer-wrap-icon" /> Vehicles</button>
-            <button><TbReportAnalytics className="drawer-wrap-icon" /> Reports</button>
-            <button><PiBroadcastFill className="drawer-wrap-icon" /> Trips</button>
-            <button><IoAnalyticsSharp className="drawer-wrap-icon" /> Analytics</button>
-            <button><IoMdSettings className="drawer-wrap-icon" /> Settings</button>
-          </div>
-          <div>
-            <button>Logout</button>
-          </div>
-        </div>
-      </Drawer>
+  closable
+  destroyOnClose
+  title={<p>{profile?.name || "User Name"}</p>}
+  placement="right"
+  open={open}
+  onClose={() => setOpen(false)}
+>
+  <div className="drawer-wrap">
+    <div className="drawer-wrap-top">
+      <button onClick={() => navigate("/dashboard/profile")}><FaUser className="drawer-wrap-icon" /> Profile</button>
+      <button onClick={() => navigate("/dashboard/vehicles")}><LuTruck className="drawer-wrap-icon" /> Vehicles</button>
+      <button onClick={() => navigate("/dashboard/reports")}><TbReportAnalytics className="drawer-wrap-icon" /> Reports</button>
+      <button onClick={() => navigate("/dashboard/trips")}><PiBroadcastFill className="drawer-wrap-icon" /> Trips</button>
+      <button onClick={() => navigate("/dashboard/analytics")}><IoAnalyticsSharp className="drawer-wrap-icon" /> Analytics</button>
+      <button onClick={() => navigate("/dashboard/settings")}><IoMdSettings className="drawer-wrap-icon" /> Settings</button>
+    </div>
+    <div>
+      <button>Logout</button>
+    </div>
+  </div>
+</Drawer>
+
     </div>
   );
 }

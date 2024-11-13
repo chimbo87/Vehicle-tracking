@@ -1,8 +1,9 @@
 import React from 'react'
+import './Notifications.css'
 
 function Notifications() {
   return (
-    <div>
+    <div id='notification-page'>
        <h4>Notifications</h4>
       <p>
         Lorem ipsum dolor sit amet, consectetur adipisicing elit. Commodi
