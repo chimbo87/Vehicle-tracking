@@ -62,7 +62,7 @@ const scheduleSchema = new mongoose.Schema({
   timestamps: true
 });
 
-// Create a 2dsphere index for geospatial queries
+
 scheduleSchema.index({ location: '2dsphere' });
 
 // Example of how to properly create a document
