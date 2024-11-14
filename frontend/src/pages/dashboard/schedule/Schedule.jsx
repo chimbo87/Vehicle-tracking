@@ -13,6 +13,7 @@ const steps = [
     content: (formData, handleInputChange, form) => (
       <>
         <div className="row">
+   <div class="schedule-head-text"> <h5>Add Vehicle On Schedule</h5></div>
           <div className="col-lg-6 col-md-4">
             <Form.Item
               name="vehicleBrand"
@@ -125,6 +126,7 @@ const steps = [
                 <Option value="southAfrica">South Africa</Option>
                 <Option value="botswana">Botswana</Option>
                 <Option value="zimbabwe">Zimbabwe</Option>
+                <Option value="namibia">Namibia</Option>
                 <Option value="zambia">Zambia</Option>
                 <Option value="mozambique">Mozambique</Option>
               </Select>

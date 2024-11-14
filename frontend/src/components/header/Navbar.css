@@ -150,6 +150,18 @@
 .drawer-wrap-icon{
   margin-right: 8px;
 }
+.drawer-logout{
+  display: flex;
+  align-items: center;
+  justify-content: start;
+}
+.drawer-logout button{
+padding: 8px 25px;
+border: 2px solid #0897d4;
+border-radius: 4px;
+background-color: gainsboro;
+color: #0897d4;
+}
 @media (max-width: 770px) {
   .navbar-container {
     display: flex;

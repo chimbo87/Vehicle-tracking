@@ -1,6 +1,6 @@
 
 #schedule-container{
-  background-color: #ffff;
+  background-color: #e9e9e9c1;
   border: 1px solid #dcdcdc;
   display: flex;
   flex-direction: column;
@@ -9,10 +9,33 @@
   margin: 20px 0px;
   padding: 50px;
 }
+.schedule-head-text{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 20px 0px;
+}
+.schedule-head-text h5{
+  font-weight: 700;
+  color: #ff6a00;
+}
 .schedule-page {
   padding: 100px;
 }
 .vehicle-details-input {
   margin: 10px 0px;
   width: 100%;
+}
+
+@media (max-width: 770px) {
+  #schedule-container{
+    background-color: #e9e9e9c1;
+    border: 1px solid #dcdcdc;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 100px 0px;
+    padding: 5px;
+  }
 }

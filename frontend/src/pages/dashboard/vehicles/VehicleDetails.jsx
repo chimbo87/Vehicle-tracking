@@ -133,7 +133,7 @@ function VehicleDetails() {
   return (
     <div id="vehicle-detail-page">
       <div className="row">
-        <div className="col-lg-12 col-md-4">
+        <div>
           <MapContainer
             center={[latitude, longitude]}
             zoom={13}
@@ -164,7 +164,7 @@ function VehicleDetails() {
         <Divider style={{ color: "brown", fontWeight: "700" }}>
           Vehicle Details
         </Divider>
-        <div className="col-lg-12 col-md-4">
+        <div>
           <div className="vehicle-details-card">
             <div className="vehicle-details-text">
               <p>Brand</p>
@@ -185,7 +185,7 @@ function VehicleDetails() {
           </div>
         </div>
         <Divider style={{ color: "brown", fontWeight: "700" }}>Owner Details</Divider>
-        <div className="col-lg-12 col-md-4">
+        <div>
           <div className="vehicle-details-card">
             <div className="vehicle-details-text">
               <p>Name</p>

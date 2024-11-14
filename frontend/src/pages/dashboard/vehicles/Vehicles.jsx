@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Table, Tag, Button, Input, Space } from "antd";
+import { Table, Tag, Button, Input, Space, Divider } from "antd";
 import { useNavigate } from "react-router-dom";
 import { SearchOutlined } from "@ant-design/icons";
 import car from "../../../assets/icons/car.png";
@@ -217,7 +217,10 @@ const Vehicles = () => {
   };
 
   const renderMobileView = () => (
-    <div className="row">
+
+  <div class="vehicle-mobile-box">
+    <Divider>Vehicle List</Divider>
+      <div className="row">
       {data.map((vehicle) => (
         <div key={vehicle.key} className="col-lg-6 col-md-4">
           <div className="vehicle-mobile-card">
@@ -241,6 +244,7 @@ const Vehicles = () => {
         </div>
       ))}
     </div>
+  </div>
   );
   
 
