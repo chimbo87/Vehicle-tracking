@@ -8,7 +8,7 @@ This project is part of the Interview process to create a Vehicle Fleet Dashboar
 
 1. Clone the repository:
 ```bash
-git clone [your-repository-url]
+git clone [https://github.com/chimbo87/Vehicle-tracking.git]
 ```
 
 2. Setup Frontend:
