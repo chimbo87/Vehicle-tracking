@@ -17,7 +17,6 @@ const scheduleSchema = new mongoose.Schema({
       required: true,
       validate: {
         validator: function(coordinates) {
-          // Validate that exactly 2 coordinates are provided
           if (!Array.isArray(coordinates) || coordinates.length !== 2) {
             return false;
           }
@@ -65,10 +64,10 @@ const scheduleSchema = new mongoose.Schema({
 
 scheduleSchema.index({ location: '2dsphere' });
 
-// Example of how to properly create a document
+
 scheduleSchema.statics.createSchedule = async function(scheduleData) {
   try {
-    // Ensure coordinates are numbers
+ 
     if (scheduleData.location?.coordinates) {
       scheduleData.location.coordinates = scheduleData.location.coordinates.map(coord => 
         typeof coord === 'string' ? parseFloat(coord) : coord
@@ -76,11 +75,10 @@ scheduleSchema.statics.createSchedule = async function(scheduleData) {
     }
     
     const schedule = new this(scheduleData);
-    await schedule.validate(); // Validate before saving
+    await schedule.validate();
     return await schedule.save();
   } catch (error) {
     if (error.name === 'ValidationError') {
-      // Enhanced error message for location validation failures
       if (error.errors?.['location.coordinates']) {
         throw new Error('Invalid coordinates. Please ensure longitude and latitude are valid numbers.');
       }

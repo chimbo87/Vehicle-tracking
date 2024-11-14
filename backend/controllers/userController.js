@@ -20,8 +20,8 @@ export const signup = async (req, res) => {
       surname,
       email,
       password,
-      ...(phone && { phone }), // Only include phone if provided
-      ...(bio && { bio }) // Only include bio if provided
+      ...(phone && { phone }), 
+      ...(bio && { bio }) 
     });
 
     // Generate token and set cookie

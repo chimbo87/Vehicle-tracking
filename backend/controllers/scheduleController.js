@@ -7,7 +7,7 @@ export async function createSchedule(req, res) {
       vehicleType,
       registrationNumber,
       vehicleStatus,
-      position,  // address
+      position,  
       town,
       country,
       destination,
@@ -85,7 +85,7 @@ export async function createSchedule(req, res) {
       vehicleType,
       registrationNumber,
       vehicleStatus,
-      address: position,  // map position to address field
+      address: position,  
       location: {
         type: 'Point',
         coordinates: [parsedLongitude, parsedLatitude]
@@ -95,7 +95,7 @@ export async function createSchedule(req, res) {
       destination,
       name,
       surname,
-      email: email.toLowerCase().trim(),  // normalize email
+      email: email.toLowerCase().trim(), 
       phoneNumber: phoneNumber.trim()
     });
 
