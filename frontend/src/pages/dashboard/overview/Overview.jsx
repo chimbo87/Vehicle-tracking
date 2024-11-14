@@ -59,14 +59,13 @@ function Overview() {
       fetch("/api/schedules/get")
         .then((response) => response.json())
         .then((data) => {
-          // Update this part:
           const filteredData = data.filter((vehicle) => {
             const [lng, lat] = vehicle.location.coordinates;
             return (
-              lat >= worldBounds.latMin && // Changed from southAfricaBounds to worldBounds
-              lat <= worldBounds.latMax && // Changed from southAfricaBounds to worldBounds
-              lng >= worldBounds.lngMin && // Changed from southAfricaBounds to worldBounds
-              lng <= worldBounds.lngMax // Changed from southAfricaBounds to worldBounds
+              lat >= worldBounds.latMin && 
+              lat <= worldBounds.latMax &&
+              lng >= worldBounds.lngMin && 
+              lng <= worldBounds.lngMax 
             );
           });
           setVehicles(filteredData);
@@ -124,6 +123,8 @@ function Overview() {
     return () => clearInterval(intervalId);
   }, []);
 
+
+  
   // Function to handle navigation to vehicle details
   const handleViewDetails = (vehicleId) => {
     navigate(`/dashboard/vehicle-details/${vehicleId}`);

@@ -50,14 +50,14 @@ function VehicleDetails() {
 
   const fetchVehicleDetails = async () => {
     try {
-      console.log("Fetching vehicle with ID:", vehicleId); // Debug log
+      console.log("Fetching vehicle with ID:", vehicleId);
       const response = await fetch(`/api/schedules/get/${vehicleId}`);
       if (!response.ok) {
         const errorData = await response.json();
         throw new Error(errorData.message || "Vehicle not found");
       }
       const data = await response.json();
-      console.log("Received vehicle data:", data); // Debug log
+      console.log("Received vehicle data:", data);
       setVehicle(data);
     } catch (error) {
       message.error(error.message || "Failed to fetch vehicle details");

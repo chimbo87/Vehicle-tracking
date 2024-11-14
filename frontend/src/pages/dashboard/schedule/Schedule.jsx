@@ -409,11 +409,6 @@ function Schedule() {
 
   return (
     <div id="schedule-container">
-      {/* <Steps current={current}>
-        {steps.map((item) => (
-          <Steps.Step key={item.title} title={item.title} />
-        ))}
-      </Steps> */}
       <div className="steps-content">
         <Form form={form} layout="vertical">
           {steps[current].content(formData, handleInputChange, handlePhoneChange, form)}
